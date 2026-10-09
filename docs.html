@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Potluck — Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#100d0b;--panel:#191412;--panel2:#221b17;--accent:#ff7a59;--text:#f6ede8;--muted:#a08d84;--line:rgba(246,237,232,.09);--line2:rgba(246,237,232,.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Bricolage Grotesque',sans-serif;line-height:1.6;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:'Courier New',monospace}
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+nav{border-bottom:1px solid var(--line);background:rgba(16,13,11,.9);backdrop-filter:blur(8px);position:sticky;top:0;z-index:50}
+.nav-in{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+.logo i{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff9d7a,var(--accent));box-shadow:0 0 14px rgba(255,122,89,.55)}
+.nav-links{display:flex;gap:22px;font-size:13.5px;color:var(--muted);align-items:center}
+.nav-links a:hover,.nav-links a.on{color:var(--accent)}
+.docs-head{padding:56px 0 34px;border-bottom:1px solid var(--line)}
+.docs-head h1{font-size:34px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.docs-head p{color:var(--muted);font-size:15px}
+.toc{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px;font-size:13px}
+section{padding:36px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+h2{font-size:21px;font-weight:700;margin-bottom:14px}
+h3{font-size:15px;font-weight:700;margin:22px 0 8px;color:var(--accent)}
+p{color:var(--muted);margin-bottom:12px;font-size:14.5px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+td.mono{font-family:'Courier New',monospace}
+code{background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1.5px 6px;font-family:'Courier New',monospace;font-size:13px;color:var(--accent)}
+pre{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 18px;overflow-x:auto;font-family:'Courier New',monospace;font-size:13px;color:var(--text);margin:12px 0;line-height:1.5}
+.addr-box{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 18px;margin:14px 0;display:grid;grid-template-columns:130px 1fr;gap:10px;font-size:13.5px}
+.addr-box .k{color:var(--muted);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding-top:2px}
+.addr-box .v{overflow-wrap:anywhere;font-family:'Courier New',monospace}
+footer{padding:36px 0 56px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+<div class="logo"><i></i>Potluck</div>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="app.html">App</a>
+<a href="docs.html" class="on">Docs</a>
+</div>
+</div></nav>
+
+<div class="wrap">
+<div class="docs-head">
+<h1>Potluck Docs</h1>
+<p>Rotating savings circle (tontine model) on BOT Chain testnet — contract custody, deterministic payouts.</p>
+<div class="toc">
+<a href="#deploy">Deployment</a><a href="#model">Model</a><a href="#abi">Contract API</a><a href="#demo">Demo activity</a><a href="#build">Build &amp; verify</a>
+</div>
+</div>
+
+<section id="deploy">
+<h2>Deployment</h2>
+<div class="addr-box">
+<div class="k">Chain</div><div class="v">BOT Chain Testnet · chainId 968 · RPC https://rpc.bohr.life · explorer https://scan.bohr.life</div>
+<div class="k">Potluck</div><div class="v"><a href="https://scan.bohr.life/address/0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1" target="_blank" rel="noopener">0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1</a> · verified ✓</div>
+<div class="k">Fund token</div><div class="v">TestWBOT <a href="https://scan.bohr.life/address/0xD8FBaBf44B2dbb427d881F8Ea66F14D8287A55c0" target="_blank" rel="noopener">0xD8FBaBf44B2dbb427d881F8Ea66F14D8287A55c0</a> · verified ✓</div>
+<div class="k">Compiler</div><div class="v">solc 0.8.30+commit.73712a01 · optimizer 200 runs · evmVersion cancun · flattened-code verification</div>
+</div>
+</section>
+
+<section id="model">
+<h2>Model</h2>
+<p>A circle is created with a fixed <code>contribution</code>, a number of <code>rounds</code>, and an ordered member list. Members contribute in list order; when <b>every member has paid for the current round</b>, the contract instantly pays the pot to the member whose turn it is:</p>
+<pre>round r payout = contribution × memberCount  →  members[r % memberCount]
+
+paidLedger[circleId][round][member]  →  exactly one payment per member per round
+require(memberList includes msg.sender)  →  creator must participate</pre>
+<p>State transitions are emitted as events (<code>CircleCreated</code>, <code>Contributed</code>, <code>Payout</code>) — the contract itself never holds anything but the current round's pot.</p>
+</section>
+
+<section id="abi">
+<h2>Contract API</h2>
+<table>
+<tr><th>Function</th><th>Signature</th><th>Description</th></tr>
+<tr><td class="mono">createCircle</td><td class="mono">(uint256 contribution, uint256 rounds, address[] memberList)</td><td>Registers circle (≥2 members, sender included)</td></tr>
+<tr><td class="mono">contribute</td><td class="mono">(uint256 circleId)</td><td>Pay current round; triggers payout when round completes</td></tr>
+<tr><td class="mono">hasPaid</td><td class="mono">(uint256, address) → bool</td><td>Whether member paid current round</td></tr>
+<tr><td class="mono">getCircle</td><td class="mono">(uint256) → (creator, contribution, rounds, currentRound, paidCount, totalPaid, active, members)</td><td>Full circle state</td></tr>
+<tr><td class="mono">circles</td><td class="mono">(uint256)</td><td>Public array getter</td></tr>
+</table>
+<h3>Events</h3>
+<table>
+<tr><th>Event</th><th>Fields</th></tr>
+<tr><td class="mono">CircleCreated</td><td class="mono">(uint256 indexed circleId, address indexed creator, uint256 contribution, uint256 rounds, uint256 memberCount)</td></tr>
+<tr><td class="mono">Contributed</td><td class="mono">(uint256 indexed circleId, address indexed member, uint256 round, uint256 amount)</td></tr>
+<tr><td class="mono">Payout</td><td class="mono">(uint256 indexed circleId, address indexed receiver, uint256 round, uint256 amount)</td></tr>
+</table>
+</section>
+
+<section id="demo">
+<h2>Demo activity</h2>
+<p>Circle #0: 3 members (Wallet A, B, C), 10 TWBOT contribution, 3 rounds. Six demo transactions, all status ok:</p>
+<table>
+<tr><th>#</th><th>Method</th><th>Actor</th><th>Description</th></tr>
+<tr><td>1</td><td class="mono">createCircle</td><td>A</td><td>3 members, 10 TWBOT, 3 rounds</td></tr>
+<tr><td>2</td><td class="mono">contribute</td><td>A</td><td>round 1, 1st payment</td></tr>
+<tr><td>3</td><td class="mono">contribute</td><td>B</td><td>round 1, 2nd payment</td></tr>
+<tr><td>4</td><td class="mono">contribute</td><td>C</td><td>round 1 complete → <b>Payout</b> 30 TWBOT to member A</td></tr>
+<tr><td>5</td><td class="mono">contribute</td><td>A</td><td>round 2, 1st payment</td></tr>
+<tr><td>6</td><td class="mono">contribute</td><td>B</td><td>round 2, 2nd payment (C pending)</td></tr>
+</table>
+</section>
+
+<section id="build">
+<h2>Build &amp; verify</h2>
+<pre>cd botchain-builds/agent-vault
+node build5.mjs                     # compile → artifacts/potluck/
+node deploy-5-testnet.mjs           # deploy → deployed-testnet-5.json
+node demo-txs-5-testnet.mjs         # 6 demo txs
+node make-flat-5.mjs                # flatten + byte-match
+node submit-verify-5.mjs Potluck    # verify on scan.bohr.life</pre>
+</section>
+
+<footer>Potluck is a testnet deployment. TestWBOT has no monetary value.</footer>
+</div>
+
+<script type="importmap">
+{"imports":{"ethers":"https://esm.sh/ethers@6.13.2","@reown/appkit":"https://esm.sh/@reown/appkit@1.8.21","@reown/appkit-adapter-ethers":"https://esm.sh/@reown/appkit-adapter-ethers@1.8.21"}}
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

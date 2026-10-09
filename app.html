@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Potluck — App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#100d0b;--panel:#191412;--panel2:#221b17;--accent:#ff7a59;--accent2:#ff9d7a;--danger:#ef4444;--text:#f6ede8;--muted:#a08d84;--line:rgba(246,237,232,.09);--line2:rgba(246,237,232,.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Bricolage Grotesque',sans-serif;line-height:1.55;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'Courier New',monospace}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+nav{border-bottom:1px solid var(--line);background:rgba(16,13,11,.9);backdrop-filter:blur(8px);position:sticky;top:0;z-index:50}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+.logo i{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--accent2),var(--accent));box-shadow:0 0 14px rgba(255,122,89,.55)}
+.nav-links{display:flex;align-items:center;gap:22px;font-size:13.5px;color:var(--muted)}
+.nav-links a:hover,.nav-links a.on{color:var(--accent)}
+.btn{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:8px;border:none;cursor:pointer;transition:all .15s;min-height:40px}
+.btn-a{background:var(--accent);color:#1a0d07}
+.btn-a:hover{background:var(--accent2)}
+.btn-g{background:transparent;color:var(--text);border:1px solid var(--line2)}
+.btn-g:hover{border-color:var(--accent)}
+select#netSel{background:var(--panel);border:1px solid var(--line2);border-radius:8px;font-family:inherit;font-size:12px;padding:9px;color:var(--text)}
+.ticker{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+.ticker .cell{padding:16px 24px;border-right:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
+.ticker .cell:last-child{border-right:none}
+.ticker .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ticker .v{font-size:15px;font-weight:700;color:var(--accent)}
+.page-head{display:flex;justify-content:space-between;align-items:center;padding:30px 0 22px;gap:16px;flex-wrap:wrap}
+.page-head h1{font-size:27px;font-weight:800;letter-spacing:-.02em}
+.badge{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:6px 12px}
+.main-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:start;padding-bottom:48px}
+@media(max-width:860px){.main-grid{grid-template-columns:1fr}.ticker{grid-template-columns:1fr}.ticker .cell{border-right:none;border-bottom:1px solid var(--line)}}
+.panel{background:var(--panel);border:1px solid var(--line2);border-radius:14px;margin-bottom:18px;overflow:hidden}
+.panel-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.panel-head h3{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.panel-head .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.row{display:grid;grid-template-columns:130px 1fr auto;gap:12px;align-items:center;padding:15px 18px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row label{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.row input,.row textarea,.row select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:inherit;font-size:14.5px;padding:10px 12px;min-height:42px}
+.row textarea{min-height:74px;resize:vertical;font-family:'Courier New',monospace;font-size:13px}
+.row input:focus,.row textarea:focus{outline:2px solid var(--accent)}
+.kv{display:flex;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+.kv:last-child{border-bottom:none}
+.kv b{color:var(--text);font-weight:600}
+.circle-card{padding:16px 18px;border-bottom:1px solid var(--line)}
+.circle-card:last-child{border-bottom:none}
+.cc-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.cc-top b{font-size:15px}
+.tag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:5px}
+.tag.on{background:rgba(255,122,89,.15);color:var(--accent);border:1px solid rgba(255,122,89,.4)}
+.tag.off{background:rgba(160,141,132,.12);color:var(--muted);border:1px solid var(--line2)}
+.cc-meta{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:8px}
+.cc-meta b{color:var(--text)}
+.bar{height:7px;background:var(--bg);border:1px solid var(--line);border-radius:99px;margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}
+.hint{padding:10px 18px 16px;font-size:12.5px;color:var(--muted)}
+.msg{margin:0 18px 14px;background:var(--panel2);border:1px dashed var(--line2);border-radius:10px;padding:12px 14px;font-size:13.5px;color:var(--accent)}
+footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.proof{background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:18px 20px;display:grid;grid-template-columns:auto 1fr;gap:8px 18px}
+.proof a{color:var(--accent)}
+</style>
+</head>
+<body>
+<nav><div class="wrap nav-in">
+<div class="logo"><i></i>Potluck</div>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="app.html" class="on">App</a>
+<a href="docs.html">Docs</a>
+<select id="netSel"><option value="968" selected>Testnet 968</option><option value="677">Mainnet 677</option></select>
+<button class="btn btn-a" id="connectBtn">Connect wallet</button>
+</div>
+</div></nav>
+
+<div class="ticker">
+<div class="cell"><span class="k">Your TestWBOT balance</span><span class="v" id="tBal">—</span></div>
+<div class="cell"><span class="k">Active circles</span><span class="v" id="tActive">—</span></div>
+<div class="cell"><span class="k">Total contributions paid</span><span class="v" id="tPaid">—</span></div>
+</div>
+
+<div class="wrap">
+<div class="page-head">
+<h1>Savings circles</h1>
+<span class="badge">Custody · chain 968</span>
+</div>
+
+<div class="main-grid">
+<div class="panel">
+<div class="panel-head"><h3>Circles</h3><div class="dot"></div></div>
+<div id="circleList"><div class="hint">Loading circles…</div></div>
+</div>
+
+<div>
+<div class="panel">
+<div class="panel-head"><h3>Create circle</h3><div class="dot"></div></div>
+<div class="row"><label>Contribution</label><input id="cAmt" type="number" step="any" placeholder="10"><span class="mono" style="color:var(--accent)">TWBOT</span></div>
+<div class="row"><label>Rounds</label><input id="cRounds" type="number" step="1" min="2" placeholder="3"><span></span></div>
+<div class="row"><label>Members</label><textarea id="cMembers" placeholder="0xabc…,0xdef…&#10;(your address is required and must be listed)"></textarea><span></span></div>
+<div class="row" style="border-bottom:none"><span></span><span></span><button class="btn btn-a" id="cBtn">Create →</button></div>
+<div class="msg" id="cMsg" style="display:none"></div>
+<div class="hint">Members must be comma-separated. You must include yourself — the contract requires it.</div>
+</div>
+
+<div class="panel">
+<div class="panel-head"><h3>Contribute</h3><div class="dot"></div></div>
+<div class="row"><label>Circle ID</label><input id="cId" type="number" step="1" min="0" placeholder="0"><span></span></div>
+<div class="row" style="border-bottom:none"><label>Amount</label><input disabled id="cPay" placeholder="auto = circle's contribution"><span class="mono" style="color:var(--accent)">TWBOT</span></div>
+<div class="row" style="border-bottom:none;grid-template-columns:1fr auto"><span class="hint" style="padding:0">Pulls the fixed contribution via TestWBOT transferFrom — approve once if needed.</span><button class="btn btn-a" id="pBtn">Contribute →</button></div>
+<div class="msg" id="pMsg" style="display:none"></div>
+</div>
+
+<div class="panel">
+<div class="panel-head"><h3>Rules</h3><div class="dot"></div></div>
+<div class="kv"><span>One payment</span><b>per member per round</b></div>
+<div class="kv"><span>Payout trigger</span><b>last member pays</b></div>
+<div class="kv"><span>Receiver order</span><b>fixed at creation</b></div>
+<div class="kv"><span>Token</span><b>TestWBOT</b></div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="proof">
+<span>Contract</span><b class="mono" style="color:var(--accent);overflow-wrap:anywhere">0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1</b>
+<span>Explorer</span><b><a class="mono" style="color:var(--accent)" href="https://scan.bohr.life/address/0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1" target="_blank" rel="noopener">scan.bohr.life ✓ verified</a></b>
+</div>
+</footer>
+
+<script type="importmap">
+{"imports":{"ethers":"https://esm.sh/ethers@6.13.2","@reown/appkit":"https://esm.sh/@reown/appkit@1.8.21","@reown/appkit-adapter-ethers":"https://esm.sh/@reown/appkit-adapter-ethers@1.8.21"}}
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
