@@ -37,6 +37,10 @@ const CONTRACTS = {
     pot: '0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1',
     twbot: '0xD8FBaBf44B2dbb427d881F8Ea66F14D8287A55c0',
   },
+  677: {
+    pot: '0x7F6fAFc9ed099a1Da4C36f7454DE7c2109aA9421',
+    twbot: '0xD5452816194a3784dBa983426cCe7c122F4abd30',
+  },
 };
 
 const $ = (id) => document.getElementById(id);
@@ -44,7 +48,7 @@ const fmt = (n, d = 18) => Number(ethers.formatUnits(n, d)).toLocaleString(undef
 
 let appkit = null;
 let readProvider;
-let currentChainId = 968;
+let currentChainId = 677;
 let account = null;
 let circlesCache = [];
 
@@ -130,7 +134,7 @@ async function renderCircles(rows) {
     const pct = r.rounds > 0n ? Number(r.currentRound * 10000n / r.rounds) / 100 : 0;
     const paidNow = paidStatus[i];
     return `<div class="circle-card">
-      <div class="cc-top"><b>#${r.id} · ${fmt(r.contribution)} TWBOT / round</b>
+      <div class="cc-top"><b>#${r.id} · ${fmt(r.contribution)} WBOT / round</b>
       <span class="tag ${r.active ? 'on' : 'off'}">${r.active ? 'active' : 'complete'}</span></div>
       <div class="cc-meta">
         <span>round <b>${r.currentRound + 1n}/${r.rounds}</b></span>
@@ -146,7 +150,7 @@ async function renderCircles(rows) {
 
 async function signerOrAlert() {
   if (!account) { appkit?.open(); return null; }
-  if (currentChainId !== 968) { alert('Demo contracts are deployed on Testnet 968. Switch network in your wallet.'); return null; }
+  if (!CONTRACTS[currentChainId]) { alert('No contracts on this network in this app. Switch to BOT Chain 677 or Testnet 968.'); return null; }
   const s = await appkit?.getSigner();
   if (!s) { appkit?.open(); return null; }
   return s;
@@ -160,7 +164,7 @@ async function ensureAllowance(tokenAddr, spender, amount) {
   const allow = await token.allowance(owner, spender);
   if (allow >= amount) return true;
   const tx = await token.approve(spender, amount);
-  showMsg('cMsg', 'Approving TestWBOT…');
+  showMsg('cMsg', 'Approving WBOT…');
   await tx.wait();
   return true;
 }
@@ -215,7 +219,7 @@ async function doContribute() {
 }
 
 function boot() {
-  readProvider = new ethers.JsonRpcProvider('https://rpc.bohr.life');
+  readProvider = new ethers.JsonRpcProvider(currentChainId === 677 ? 'https://rpc.botchain.ai' : 'https://rpc.bohr.life');
   initAppKit();
   $('cBtn')?.addEventListener('click', doCreate);
   $('pBtn')?.addEventListener('click', doContribute);

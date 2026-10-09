@@ -82,13 +82,13 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <a href="index.html">Home</a>
 <a href="app.html" class="on">App</a>
 <a href="docs.html">Docs</a>
-<select id="netSel"><option value="968" selected>Testnet 968</option><option value="677">Mainnet 677</option></select>
+<select id="netSel"><option value="968">Testnet 968</option><option value="677" selected>Mainnet 677</option></select>
 <button class="btn btn-a" id="connectBtn">Connect wallet</button>
 </div>
 </div></nav>
 
 <div class="ticker">
-<div class="cell"><span class="k">Your TestWBOT balance</span><span class="v" id="tBal">—</span></div>
+<div class="cell"><span class="k">Your WBOT balance</span><span class="v" id="tBal">—</span></div>
 <div class="cell"><span class="k">Active circles</span><span class="v" id="tActive">—</span></div>
 <div class="cell"><span class="k">Total contributions paid</span><span class="v" id="tPaid">—</span></div>
 </div>
@@ -96,7 +96,7 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <div class="wrap">
 <div class="page-head">
 <h1>Savings circles</h1>
-<span class="badge">Custody · chain 968</span>
+<span class="badge">Custody · chain 677</span>
 </div>
 
 <div class="main-grid">
@@ -108,7 +108,7 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <div>
 <div class="panel">
 <div class="panel-head"><h3>Create circle</h3><div class="dot"></div></div>
-<div class="row"><label>Contribution</label><input id="cAmt" type="number" step="any" placeholder="10"><span class="mono" style="color:var(--accent)">TWBOT</span></div>
+<div class="row"><label>Contribution</label><input id="cAmt" type="number" step="any" placeholder="10"><span class="mono" style="color:var(--accent)">WBOT</span></div>
 <div class="row"><label>Rounds</label><input id="cRounds" type="number" step="1" min="2" placeholder="3"><span></span></div>
 <div class="row"><label>Members</label><textarea id="cMembers" placeholder="0xabc…,0xdef…&#10;(your address is required and must be listed)"></textarea><span></span></div>
 <div class="row" style="border-bottom:none"><span></span><span></span><button class="btn btn-a" id="cBtn">Create →</button></div>
@@ -119,8 +119,8 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <div class="panel">
 <div class="panel-head"><h3>Contribute</h3><div class="dot"></div></div>
 <div class="row"><label>Circle ID</label><input id="cId" type="number" step="1" min="0" placeholder="0"><span></span></div>
-<div class="row" style="border-bottom:none"><label>Amount</label><input disabled id="cPay" placeholder="auto = circle's contribution"><span class="mono" style="color:var(--accent)">TWBOT</span></div>
-<div class="row" style="border-bottom:none;grid-template-columns:1fr auto"><span class="hint" style="padding:0">Pulls the fixed contribution via TestWBOT transferFrom — approve once if needed.</span><button class="btn btn-a" id="pBtn">Contribute →</button></div>
+<div class="row" style="border-bottom:none"><label>Amount</label><input disabled id="cPay" placeholder="auto = circle's contribution"><span class="mono" style="color:var(--accent)">WBOT</span></div>
+<div class="row" style="border-bottom:none;grid-template-columns:1fr auto"><span class="hint" style="padding:0">Pulls the fixed contribution via WBOT transferFrom — approve once if needed.</span><button class="btn btn-a" id="pBtn">Contribute →</button></div>
 <div class="msg" id="pMsg" style="display:none"></div>
 </div>
 
@@ -129,22 +129,22 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <div class="kv"><span>One payment</span><b>per member per round</b></div>
 <div class="kv"><span>Payout trigger</span><b>last member pays</b></div>
 <div class="kv"><span>Receiver order</span><b>fixed at creation</b></div>
-<div class="kv"><span>Token</span><b>TestWBOT</b></div>
+<div class="kv"><span>Token</span><b>WBOT</b></div>
 </div>
 </div>
 </div>
 
 <footer><div class="wrap">
-<p style="margin-bottom:2px">Potluck — rotating savings circles on BOT Chain. Testnet deployment; test tokens have no monetary value.</p>
+<p style="margin-bottom:2px">Potluck — rotating savings circles on BOT Chain. Live on mainnet; real assets with real value.</p>
 <div class="proof">
-<div class="proof-title">Proof on BOT Testnet</div>
+<div class="proof-title">Proof on BOT Mainnet</div>
 <div class="proof-grid">
-<span>Chain ID</span><span class="val">968</span>
-<span>Contract</span><span class="val">0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1</span>
+<span>Chain ID</span><span class="val">677</span>
+<span>Contract</span><span class="val">0x7F6fAFc9ed099a1Da4C36f7454DE7c2109aA9421</span>
 </div>
 <div class="proof-links">
 <a href="https://botchain.ai" target="_blank" rel="noopener" class="proof-link">BOT Chain Website &#8599;</a>
-<a href="https://scan.bohr.life/address/0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1" target="_blank" rel="noopener" class="proof-link">BOTScan Explorer &#8599;</a>
+<a href="https://scan.botchain.ai/" target="_blank" rel="noopener" class="proof-link">BOTScan Explorer &#8599;</a>
 </div>
 </div>
 </div></footer>

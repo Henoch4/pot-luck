@@ -63,7 +63,7 @@ footer{padding:36px 0 56px;color:var(--muted);font-size:13px}
 <div class="wrap">
 <div class="docs-head">
 <h1>Potluck Docs</h1>
-<p>Rotating savings circle (tontine model) on BOT Chain testnet — contract custody, deterministic payouts.</p>
+<p>Rotating savings circle (tontine model) on BOT Chain mainnet — contract custody, deterministic payouts.</p>
 <div class="toc">
 <a href="#deploy">Deployment</a><a href="#model">Model</a><a href="#abi">Contract API</a><a href="#demo">Demo activity</a><a href="#build">Build &amp; verify</a>
 </div>
@@ -72,9 +72,9 @@ footer{padding:36px 0 56px;color:var(--muted);font-size:13px}
 <section id="deploy">
 <h2>Deployment</h2>
 <div class="addr-box">
-<div class="k">Chain</div><div class="v">BOT Chain Testnet · chainId 968 · RPC https://rpc.bohr.life · explorer https://scan.bohr.life</div>
-<div class="k">Potluck</div><div class="v"><a href="https://scan.bohr.life/address/0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1" target="_blank" rel="noopener">0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1</a> · verified ✓</div>
-<div class="k">Fund token</div><div class="v">TestWBOT <a href="https://scan.bohr.life/address/0xD8FBaBf44B2dbb427d881F8Ea66F14D8287A55c0" target="_blank" rel="noopener">0xD8FBaBf44B2dbb427d881F8Ea66F14D8287A55c0</a> · verified ✓</div>
+<div class="k">Chain</div><div class="v">BOT Chain Mainnet · chainId 677 · RPC https://rpc.botchain.ai · explorer https://scan.botchain.ai</div>
+<div class="k">Potluck</div><div class="v"><a href="https://scan.botchain.ai/address/0x7F6fAFc9ed099a1Da4C36f7454DE7c2109aA9421" target="_blank" rel="noopener">0x7F6fAFc9ed099a1Da4C36f7454DE7c2109aA9421</a> · verified ✓</div>
+<div class="k">Fund token</div><div class="v">WBOT <a href="https://scan.botchain.ai/address/0xD5452816194a3784dBa983426cCe7c122F4abd30" target="_blank" rel="noopener">0xD5452816194a3784dBa983426cCe7c122F4abd30</a></div>
 <div class="k">Compiler</div><div class="v">solc 0.8.30+commit.73712a01 · optimizer 200 runs · evmVersion cancun · flattened-code verification</div>
 </div>
 </section>
@@ -110,7 +110,7 @@ require(memberList includes msg.sender)  →  creator must participate</pre>
 
 <section id="demo">
 <h2>Demo activity</h2>
-<p>Circle #0: 3 members (Wallet A, B, C), 10 TWBOT contribution, 3 rounds. Six demo transactions, all status ok:</p>
+<p>Circle #0: 3 members (Wallet A, B, C), 10 TWBOT contribution, 3 rounds. Six testnet demo transactions, all status ok:</p>
 <table>
 <tr><th>#</th><th>Method</th><th>Actor</th><th>Description</th></tr>
 <tr><td>1</td><td class="mono">createCircle</td><td>A</td><td>3 members, 10 TWBOT, 3 rounds</td></tr>
@@ -126,23 +126,23 @@ require(memberList includes msg.sender)  →  creator must participate</pre>
 <h2>Build &amp; verify</h2>
 <pre>cd botchain-builds/agent-vault
 node build5.mjs                     # compile → artifacts/potluck/
-node deploy-5-testnet.mjs           # deploy → deployed-testnet-5.json
-node demo-txs-5-testnet.mjs         # 6 demo txs
+node deploy-5-mainnet.mjs           # deploy → deployed-mainnet-5.json
+node demo-5-mainnet.mjs         # 6 demo txs
 node make-flat-5.mjs                # flatten + byte-match
-node submit-verify-5.mjs Potluck    # verify on scan.bohr.life</pre>
+node submit-verify-5-mainnet.mjs Potluck    # verify on scan.botchain.ai</pre>
 </section>
 
 <footer><div class="wrap">
-<p style="margin-bottom:2px">Potluck — rotating savings circles on BOT Chain. Testnet deployment; test tokens have no monetary value.</p>
+<p style="margin-bottom:2px">Potluck — rotating savings circles on BOT Chain. Live on mainnet; real assets with real value.</p>
 <div class="proof">
-<div class="proof-title">Proof on BOT Testnet</div>
+<div class="proof-title">Proof on BOT Mainnet</div>
 <div class="proof-grid">
-<span>Chain ID</span><span class="val">968</span>
-<span>Contract</span><span class="val">0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1</span>
+<span>Chain ID</span><span class="val">677</span>
+<span>Contract</span><span class="val">0x7F6fAFc9ed099a1Da4C36f7454DE7c2109aA9421</span>
 </div>
 <div class="proof-links">
 <a href="https://botchain.ai" target="_blank" rel="noopener" class="proof-link">BOT Chain Website &#8599;</a>
-<a href="https://scan.bohr.life/address/0x5A5868e8CB560438f9A1b1eC0c16be5d9B0A8da1" target="_blank" rel="noopener" class="proof-link">BOTScan Explorer &#8599;</a>
+<a href="https://scan.botchain.ai/" target="_blank" rel="noopener" class="proof-link">BOTScan Explorer &#8599;</a>
 </div>
 </div>
 </div></footer>
