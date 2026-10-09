@@ -110,15 +110,15 @@ require(memberList includes msg.sender)  →  creator must participate</pre>
 
 <section id="demo">
 <h2>Demo activity</h2>
-<p>Circle #0: 3 members (Wallet A, B, C), 10 TWBOT contribution, 3 rounds. Six testnet demo transactions, all status ok:</p>
+<p>Circle #0: 3 members (Wallet A, B, C), 0.01 WBOT contribution, 3 rounds. Six mainnet demo transactions, all status ok:</p>
 <table>
-<tr><th>#</th><th>Method</th><th>Actor</th><th>Description</th></tr>
-<tr><td>1</td><td class="mono">createCircle</td><td>A</td><td>3 members, 10 TWBOT, 3 rounds</td></tr>
-<tr><td>2</td><td class="mono">contribute</td><td>A</td><td>round 1, 1st payment</td></tr>
-<tr><td>3</td><td class="mono">contribute</td><td>B</td><td>round 1, 2nd payment</td></tr>
-<tr><td>4</td><td class="mono">contribute</td><td>C</td><td>round 1 complete → <b>Payout</b> 30 TWBOT to member A</td></tr>
-<tr><td>5</td><td class="mono">contribute</td><td>A</td><td>round 2, 1st payment</td></tr>
-<tr><td>6</td><td class="mono">contribute</td><td>B</td><td>round 2, 2nd payment (C pending)</td></tr>
+<tr><th>#</th><th>Method</th><th>Actor</th><th>Description</th><th>Tx</th></tr>
+<tr><td>1</td><td class="mono">createCircle</td><td>A</td><td>3 members, 0.01 WBOT, 3 rounds</td><td class="mono"><a href="https://scan.botchain.ai/tx/0xd73f1576447cb9f088c082617c699979ddce6075483c67d99f79eb3d02d61db3" target="_blank" rel="noopener">0xd73f1576…1db3</a></td></tr>
+<tr><td>2</td><td class="mono">contribute</td><td>A</td><td>round 1, 1st payment</td><td class="mono"><a href="https://scan.botchain.ai/tx/0x87fbcd5859cf046bdeae9a07aa7af441e4ac3ef053602e0dd68cf26dd8e163c2" target="_blank" rel="noopener">0x87fbcd58…63c2</a></td></tr>
+<tr><td>3</td><td class="mono">contribute</td><td>B</td><td>round 1, 2nd payment</td><td class="mono"><a href="https://scan.botchain.ai/tx/0x216f3b2bd966ba7f1c3a810cd5ff080aded7649a964071a47007169286285ca8" target="_blank" rel="noopener">0x216f3b2b…5ca8</a></td></tr>
+<tr><td>4</td><td class="mono">contribute</td><td>C</td><td>round 1 complete → <b>Payout</b> 0.03 WBOT to member A</td><td class="mono"><a href="https://scan.botchain.ai/tx/0xe1ba7ae28fa212d60d520559ea5d420e3e5526dc201c9761006585cc5b5ff417" target="_blank" rel="noopener">0xe1ba7ae2…f417</a></td></tr>
+<tr><td>5</td><td class="mono">contribute</td><td>A</td><td>round 2, 1st payment</td><td class="mono"><a href="https://scan.botchain.ai/tx/0x2bb3852639339f979c6bdbad82635332ef7da1379d58d17cf11ac0f422377ae8" target="_blank" rel="noopener">0x2bb38526…7ae8</a></td></tr>
+<tr><td>6</td><td class="mono">contribute</td><td>B</td><td>round 2, 2nd payment (C pending)</td><td class="mono"><a href="https://scan.botchain.ai/tx/0x65f6060a43a81163a6023ef17da6a1ee3a43ee538ef0753b84c702b9df09a5a3" target="_blank" rel="noopener">0x65f6060a…a5a3</a></td></tr>
 </table>
 </section>
 
