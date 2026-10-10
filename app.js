@@ -29,6 +29,7 @@ const ERC20_ABI = [
   'function balanceOf(address) view returns (uint256)',
   'function decimals() view returns (uint8)',
   'function approve(address,uint256) returns (bool)',
+  'function deposit() payable',
   'function allowance(address,address) view returns (uint256)',
 ];
 
@@ -169,6 +170,27 @@ async function ensureAllowance(tokenAddr, spender, amount) {
   return true;
 }
 
+async function ensureWbot(amount, msgId) {
+  const s = await signerOrAlert();
+  if (!s) return false;
+  const c = CONTRACTS[currentChainId];
+  const w = new ethers.Contract(c.twbot, ERC20_ABI, s);
+  const owner = await s.getAddress();
+  const bal = await w.balanceOf(owner);
+  if (bal >= amount) return true;
+  const shortfall = amount - bal;
+  const native = await s.provider.getBalance(owner);
+  const gasCost = ethers.parseUnits('0.005', 18);
+  if (native < shortfall + gasCost) {
+    showMsg(msgId, 'Need ' + fmt(shortfall + gasCost - native) + ' more BOT — fund the wallet first (wrap + gas).');
+    return false;
+  }
+  showMsg(msgId, 'Wrapping BOT → WBOT…');
+  const tx = await w.deposit({ value: shortfall });
+  await tx.wait();
+  return true;
+}
+
 async function doCreate() {
   const msgId = 'cMsg';
   const s = await signerOrAlert();
@@ -206,6 +228,7 @@ async function doContribute() {
   let info;
   try { info = await pot.getCircle(id); } catch { return showMsg(msgId, 'No such circle'); }
   if (!info[6]) return showMsg(msgId, 'Circle is not active');
+  if (!(await ensureWbot(info[1], msgId))) return;
   if (!(await ensureAllowance(c.twbot, c.pot, info[1]))) return;
   const potW = new ethers.Contract(c.pot, POT_ABI, s);
   showMsg(msgId, 'Sending contribute…');
