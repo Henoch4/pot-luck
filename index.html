@@ -118,6 +118,22 @@ let paidMap = {};
 function rpc() { return new ethers.JsonRpcProvider(currentChainId === 677 ? 'https://rpc.botchain.ai' : 'https://rpc.bohr.life'); }
 const short = (a) => (a ? a.slice(0, 6) + '…' + a.slice(-4) : '—');
 
+function getProvider() {
+  try {
+    if (typeof appkit !== 'undefined' && appkit && typeof appkit.getWalletProvider === 'function') {
+      const p = appkit.getWalletProvider('eip155') || appkit.getWalletProvider();
+      if (p) return p;
+    }
+  } catch (e) {}
+  return null;
+}
+async function getSigner() {
+  const wp = getProvider();
+  if (!wp) { try { appkit.open(); } catch (e) {} return null; }
+  return new ethers.BrowserProvider(wp).getSigner();
+}
+
+
 function initAppKit() {
   const adapter = new EthersAdapter();
   appkit = new AppKit({
@@ -214,7 +230,7 @@ async function payMine() {
   if (paidMap[me]) return toast("You already paid this round");
   try {
     const c = CHAINS[currentChainId];
-    const s = await appkit.getSigner();
+    const s = await getSigner(); if (!s) return;;
     const t = new ethers.Contract(c.wbot, ERC20_ABI, s);
     if ((await t.balanceOf(me)) < circle.contribution) return toast("Insufficient " + c.sym);
     if ((await t.allowance(me, c.pot)) < circle.contribution) {
